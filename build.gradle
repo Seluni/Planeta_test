@@ -1,4 +1,5 @@
 import java.nio.charset.StandardCharsets
+
 plugins {
     id 'java'
     id 'base'
@@ -9,29 +10,36 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'io.qameta.allure' version '2.5'
 }
+
 group = 'package'
 version = '1.0.0'
-description = 'Kadena Automation testing'
+description = 'Planeta Automation testing'
+
 sourceCompatibility = JavaVersion.VERSION_1_8
+
 ext {
     encoding = StandardCharsets.UTF_8.toString()
     log4jVersion = '2.10.0'
     junitJupiterVersion = '5.1.0'
     allureVersion = '2.6.0'
 }
+
 tasks.withType(JavaCompile) {
     options.incremental = true
     options.encoding = encoding
     options.compilerArgs = options.compilerArgs + ["-Xep:ParameterName:OFF"]
 }
+
 tasks.withType(Javadoc) {
     options.encoding = encoding
 }
+
 allure {
     autoconfigure = true
     version = '2.6.0'
     useJUnit5
 }
+
 allprojects {
     apply plugin: 'idea'
     idea {
@@ -41,16 +49,14 @@ allprojects {
         }
     }
 }
+
 repositories {
     jcenter()
     mavenCentral()
 }
 dependencies {
-    compile('javax.mail:mail:1.4.7')
-    implementation('com.github.javafaker:javafaker:0.14')
     implementation("org.projectlombok:lombok:1.16.20")
-    implementation("com.codeborne:selenide:4.11.4")
-    implementation("org.seleniumhq.selenium:selenium-java:2.37.0")
+    implementation("com.codeborne:selenide:4.12.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     compile("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
     compile("io.qameta.allure:allure-selenide:$allureVersion")
@@ -62,55 +68,35 @@ dependencies {
     testRuntimeOnly("org.apache.logging.log4j:log4j-jcl:$log4jVersion")
     testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
 }
-//test {
-//    useJUnitPlatform() {
-////      includeTags :"smoke"
-//        //  excludeTags  "smoke"
-//        if (System.getProperty("tags") != null) {
-//            includeTags System.getProperty("tags").toString() //gradle test -Dtags=smoke
-//        }
-//    }
-//    testLogging {
-//        events 'passed', 'skipped', 'failed'
-//    }
-//    reports {
-//        junitXml.enabled = true
-//        html.enabled = true
-//    }
-//    testLogging.showStandardStreams = true
-//    systemProperties = System.properties + [
-//            'file.encoding'             : encoding,
-//            'allure.results.directory'  : 'build/allure-results',
-//            'java.util.logging.manager' : 'org.apache.logging.log4j.jul.LogManager',
-//            'allure.link.mylink.pattern': 'https://cenveo.atlassian.net/browse/{}',
-//            'allure.link.issue.pattern' : 'https://cenveo.atlassian.net/browse/{}',
-//            'allure.link.tms.pattern'   : 'https://cenveo.atlassian.net/browse/{}'
-//    ] as Map<String, ?>
-//    maxParallelForks = (int) (Runtime.runtime.availableProcessors().intdiv(2) ?: 1)
-//    forkEvery = 4
-//}
+
+test {
+    useJUnitPlatform() {}
+
+testLogging {
+    events 'passed', 'skipped', 'failed'
+}
+
+reports {
+    junitXml.enabled = true
+    html.enabled = true
+}
+
+testLogging.showStandardStreams = true
+systemProperties = System.properties + [
+    'file.encoding'             : encoding,
+    'allure.results.directory'  : 'build/allure-results',
+    'java.util.logging.manager' : 'org.apache.logging.log4j.jul.LogManager'
+] as Map<String, ?>
+maxParallelForks = (int) (Runtime.runtime.availableProcessors().intdiv(2) ?: 1)
+forkEvery = 4
+}
+
 task customAllureReport(type: io.qameta.allure.gradle.task.AllureReport) {
 }
+
 //tasks.withType(Test)*.finalizedBy customAllureReport
+
 wrapper.gradleVersion = '4.6'
-//tasks.withType(Test).all { testTask ->
-//    systemProperties['selenide.browser'] = System.getProperty('selenide.browser', 'firefox')
-//    systemProperties['env'] = System.getProperty('env', 'local')
-//    testTask.systemProperties['file.encoding'] = 'UTF-8'
-//    testTask.testLogging.showStandardStreams = true
-//    testTask.outputs.upToDateWhen { false }
-//}
-//
-//task chrome(type: Test) {
-//    gradle chrome
-//    systemProperties['test.browser'] = 'chrome'
-//    gradle chrome -Dselenide.browser=chrome
-//    systemProperties['selenide.browser'] = System.getProperty('selenide.browser', 'chrome')
-//}
-//task edge(type: Test) {
-//    systemProperties['test.browser'] = 'edge'
-//}
-//
-//task firefox(type: Test) {
-//    systemProperties['selenide.browser'] = 'firefox'
-//}
+
+
+

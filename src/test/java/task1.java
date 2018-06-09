@@ -2,7 +2,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$;
@@ -63,7 +64,7 @@ public class task1 {
                     Panes.shouldBe(visible).shouldHave(cssValue("display", "block"));
                     CloseButton.click();
                     Panes.shouldBe(hidden).shouldHave(cssValue("display", "none"));
-                    
+
                 }
             }
         }
