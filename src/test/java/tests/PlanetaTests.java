@@ -13,7 +13,7 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Test;
 
 
-public class PlanetaTests {
+public class PlanetaTests extends BaseTest{
 
     @Description("Проверка смены цвета ссылок при наведении")
     @Feature("Planeta main menu")
@@ -44,7 +44,11 @@ public class PlanetaTests {
 
         for (SelenideElement MenuPad : menuItems) {
                 MenuPad.hover();
-                $(".PanesItem.PanesItem--active[data-id='"+MenuPad.getAttribute("data-target")+"']").shouldBe(visible).shouldHave(cssValue("display", "block")).shouldHave(text("Сравнить продукты")).shouldHave(text("Пополнить баланс"));
+                $(".PanesItem.PanesItem--active[data-id='"+MenuPad.getAttribute("data-target")+"']")
+                    .shouldBe(visible)
+                    .shouldHave(cssValue("display", "block"))
+                    .shouldHave(text("Сравнить продукты"))
+                    .shouldHave(text("Пополнить баланс"));
 
         }
     }
@@ -61,7 +65,9 @@ public class PlanetaTests {
 
         for (SelenideElement MenuPad : menuItems){
            MenuPad.click();
-            $(".PanesItem.PanesItem--active[data-id='"+MenuPad.getAttribute("data-target")+"']").shouldBe(visible).shouldHave(cssValue("display", "block"));
+            $(".PanesItem.PanesItem--active[data-id='"+MenuPad.getAttribute("data-target")+"']")
+                .shouldBe(visible)
+                .shouldHave(cssValue("display", "block"));
             $(".Navigation__close").click();
         }
     }
