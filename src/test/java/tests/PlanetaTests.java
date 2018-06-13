@@ -28,13 +28,13 @@ public class PlanetaTests {
         }
     }
 
-    @Description("Проверка смены цвета ссылок при наведении")
+    @Description("Проверка прокрутки плашек")
     @Feature("Planeta main menu")
     @Test
     public void NavigationMenuClick() throws InterruptedException {
         open("https://planeta.tc/ekb");
         ElementsCollection menuItems = $$(".NavigationMenuItem");
-        ElementsCollection menuPanes = $$(".NavigationPanes");
+        ElementsCollection menuPanes = $$(".PanesItem");
 
         menuItems.findBy(text("ПРОДУКТЫ")).click();
 
@@ -42,12 +42,16 @@ public class PlanetaTests {
         //3.    Проверяет, что все плашки меню содержат пункты "Сравнить продукты", "Пополнить баланс";
 
         for (SelenideElement MenuPad : menuItems) {
+            String menAttr = MenuPad.getAttribute("data-target");
             for (SelenideElement Panes : menuPanes) {
-                MenuPad.hover();
-                Thread.sleep(1000);
-                Panes.shouldBe(visible);
-                Panes.shouldHave(text("Сравнить продукты"));
-                Panes.shouldHave(text("Пополнить баланс"));
+                String panAttr = Panes.getAttribute("data-id");
+                while (menAttr == panAttr) {
+                    MenuPad.hover();
+                    Thread.sleep(1000);
+                    Panes.shouldBe(visible);
+                    Panes.shouldHave(text("Сравнить продукты"));
+                    Panes.shouldHave(text("Пополнить баланс"));
+                }
             }
         }
     }
