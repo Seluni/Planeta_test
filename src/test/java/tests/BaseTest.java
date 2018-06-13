@@ -24,9 +24,9 @@ public abstract class BaseTest {
         //        gradle test -Dtest.browser=chrome
         if (System.getProperty("test.browser") != null) {
             browser = System.getProperty("test.browser");
-        } else if (browser.equals("firefox")) {
-            browser = ChromeBrowser.class.getName();
         } else if (browser.equals("chrome")) {
+            browser = ChromeBrowser.class.getName();
+        } else if (browser.equals("firefox")) {
             browser = FirefoxBrowser.class.getName();
         } else if (browser.equals("edge")) {
             browser = WebDriverRunner.INTERNET_EXPLORER;
