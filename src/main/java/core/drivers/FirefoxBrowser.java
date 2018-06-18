@@ -17,7 +17,7 @@ public class FirefoxBrowser implements WebDriverProvider {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.fromLevel(Level.SEVERE));
-        firefoxOptions.addArguments("test-type");
+        firefoxOptions.addArguments("planeta.tc/ekb");
         firefoxOptions.addArguments("--start-maximized");
         firefoxOptions.addArguments("--disable-web-security");
         firefoxOptions.addArguments("--allow-running-insecure-content");
